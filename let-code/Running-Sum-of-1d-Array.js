@@ -14,6 +14,7 @@ const runningSum = (nums) => {
 
 //0(n) TC 
 //0(1) EC
+
 const runningSum2 = (nums) => {
   for (let i = 1; i < nums.length; i++) nums[i] += nums[i - 1];
   return nums;
