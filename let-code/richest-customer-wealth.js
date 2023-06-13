@@ -1,13 +1,11 @@
-//richest-customer-wealth.js
+//cd let-code node --watch  richest-customer-wealth.js
 
 const maximumWealth = (accounts) => {
   let sum = 0;
   let array = []
   accounts.forEach((element) => {
-   
     element.map((e) => {
       sum += e;
-      return sum;
     });
     array.push(sum)
     sum = 0
