@@ -5,7 +5,7 @@ data = subprocess.check_output(
 
 allProfiles = [i.split(":")[1][1:-1] for i in data if "All User Profile" in i]
 
-ERROR_CASE = 'Wilber'
+ERROR_CASE = 'ur_err_case'
 
 for i in allProfiles:
 
