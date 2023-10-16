@@ -103,7 +103,7 @@ const transactions = [
   },
 ];
 
-const isValidTimeDifferents = (time_1, time_2) => {
+const isValidTime = (time_1, time_2) => {
   const secondsDiff =
     (new Date(time_1).getTime() - new Date(time_2).getTime()) / 1000;
 
@@ -111,7 +111,7 @@ const isValidTimeDifferents = (time_1, time_2) => {
 };
 
 const isDuplicate = (o1 = {}, o2 = {}) => {
-  if (!isValidTimeDifferents(o1.time, o2.time)) return false;
+  if (!isValidTime(o1.time, o2.time)) return false;
 
   const ob_keys = Object.keys(o1).filter(
     (key) => key !== "id" && key !== "time"
@@ -135,45 +135,24 @@ const sortTransactions = (transactions) => {
 
 const groupTransactions = (transactions) => {
   const transactions_sorted = sortTransactions(transactions);
+  const res = {};
+  transactions_sorted.forEach((transac) => {
+    const { sourceAccount, targetAccount, amount, category } = transac;
+    const key = `${sourceAccount}-${targetAccount}-${amount}-${category}`;
 
-  const res = [];
-  let aux = [];
-  let count = transactions.length - 1;
-  let p1 = 0;
-  let p2 = 1;
+    if (res[key]) {
+      const lastPos = res[key].length - 1;
+      if (isDuplicate(res[key][lastPos], transac)) {
+        res[key].push(transac);
+      }
+    } else {
+      res[key] = [transac];
+    }
+  });
 
-  if (transactions_sorted.at(1)) {
-    console.log(transactions_sorted.at(1));
-  }
-
-  // while (count !== 0) {
-  //   transactions_sorted.forEach((item) => {});
-  //   i++;
-  // }
-
-  return transactions_sorted;
+  return Object.values(res);
 };
 
-//console.log(groupTransactions(transactions));
+const group_transactions = groupTransactions(transactions);
 
-function reverseString2(str) {
-  const start = new Date();
-  let res = "";
-  for (let i = str.length - 1; i >= 0; i--) res += str[i];
-  console.log("time executed", new Date() - start);
-}
-function reverseString1(str) {
-  const start = new Date();
-  str.split("").reverse().join("");
-  console.log("time executed", new Date() - start);
-}
-
-let str = "";
-for (let index = 0; index < 2000000; index++) {
-  str += index;
-}
-
-console.log("1 -> ");
-reverseString1(str);
-console.log("2 -> ");
-reverseString2(str);
+console.log(group_transactions);
