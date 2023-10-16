@@ -139,16 +139,19 @@ const groupTransactions = (transactions) => {
   const res = [];
   let aux = [];
   let count = transactions.length - 1;
-  let i = 1;
-  while (count !== 0) {
-    transactions_sorted.forEach((item) => {});
-    i++;
+  let p1 = 0;
+  let p2 = 1;
+
+    if (transactions_sorted.at(1)) {
+      console.log(transactions_sorted.at(1));
+    }
   }
+  // while (count !== 0) {
+  //   transactions_sorted.forEach((item) => {});
+  //   i++;
+  // }
 
-  return res;
-
+  return transactions_sorted;
 };
-
-groupTransactions(transactions);
-
-
+console.log("sex");
+console.log(groupTransactions(transactions));

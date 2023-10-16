@@ -2,16 +2,16 @@
 
 const maximumWealth = (accounts) => {
   let sum = 0;
-  let array = []
+  let array = [];
   accounts.forEach((element) => {
     element.map((e) => {
       sum += e;
     });
-    array.push(sum)
-    sum = 0
+    array.push(sum);
+    sum = 0;
   });
 
-  return  Math.max(...array)
+  return Math.max(...array);
 };
 
 accounts = [
@@ -21,4 +21,4 @@ accounts = [
 
 const a = accounts[0];
 
-console.log(maximumWealth(accounts))
+console.log(maximumWealth(accounts));
