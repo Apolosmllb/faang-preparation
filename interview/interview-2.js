@@ -142,10 +142,10 @@ const groupTransactions = (transactions) => {
   let p1 = 0;
   let p2 = 1;
 
-    if (transactions_sorted.at(1)) {
-      console.log(transactions_sorted.at(1));
-    }
+  if (transactions_sorted.at(1)) {
+    console.log(transactions_sorted.at(1));
   }
+
   // while (count !== 0) {
   //   transactions_sorted.forEach((item) => {});
   //   i++;
@@ -153,5 +153,27 @@ const groupTransactions = (transactions) => {
 
   return transactions_sorted;
 };
-console.log("sex");
-console.log(groupTransactions(transactions));
+
+//console.log(groupTransactions(transactions));
+
+function reverseString2(str) {
+  const start = new Date();
+  let res = "";
+  for (let i = str.length - 1; i >= 0; i--) res += str[i];
+  console.log("time executed", new Date() - start);
+}
+function reverseString1(str) {
+  const start = new Date();
+  str.split("").reverse().join("");
+  console.log("time executed", new Date() - start);
+}
+
+let str = "";
+for (let index = 0; index < 2000000; index++) {
+  str += index;
+}
+
+console.log("1 -> ");
+reverseString1(str);
+console.log("2 -> ");
+reverseString2(str);
