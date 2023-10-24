@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export type RandomFetchResponse = {
   data: number | undefined;
   error: string | null;
-  loading: boolean;
+  isloading: boolean;
 };
 
 export const ERRORS = {
@@ -12,31 +12,32 @@ export const ERRORS = {
   "0003": "El cliente no tiene una mesita de noche",
 };
 
-export const useRandom = (): RandomFetchResponse => {
+export const useRandom = (reTryKey: any): RandomFetchResponse => {
   const [result, setResult] = useState<RandomFetchResponse>({
     data: undefined,
     error: null,
-    loading: true,
+    isloading: false,
   });
 
   useEffect(() => {
+    setResult({ ...result, isloading: true });
     const fetchData = async () => {
       try {
         const res = await fetch(
-          "https://www.random.org/integers/?num=1&min=1&max=50&col=1&base=10&format=plain&rnd=new"
+          "https://www.random.org/integers/?num=1&min=1&max=5000&col=1&base=10&format=plain&rnd=new"
         );
         const data = await res.json();
-        setResult({ ...result, data: data, loading: false });
-        throw new Error("0001");
+        setResult({ ...result, data: data, isloading: false });
+        //throw new Error("0001");
       } catch (err: Error | any) {
         let errMessage =
           ERRORS[err.message as keyof typeof ERRORS] ?? "Something went wrong";
 
-        setResult({ ...result, error: errMessage, loading: false });
+        setResult({ ...result, error: errMessage, isloading: false });
       }
     };
     fetchData();
-  }, []);
+  }, [reTryKey]);
 
   return result;
 };

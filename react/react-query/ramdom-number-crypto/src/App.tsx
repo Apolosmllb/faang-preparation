@@ -1,17 +1,44 @@
 import "./App.css";
-import { useRandom } from "./useRamdom";
+import { useQuery } from "@tanstack/react-query";
+import {
+  //getRandomNumberFromApi,
+  getRandomNumberFromAxios,
+} from "./fetchRamdom";
 
-// https://www.random.org/integers/?num=1&min=1&max=500&col=1&base=10&format=plain&rnd=new
 export const App = () => {
-  //const [count, setCount] = useState(0);
-  const { loading, data, error } = useRandom();
+  const ramdomQuery = useQuery({
+    queryKey: ["ramdomNumber"],
+    queryFn: getRandomNumberFromAxios,
+    retry: 1,
+  });
+  console.log("🚀 ~ file: App.tsx:14 ~ App ~ ramdomQuery:", ramdomQuery);
+  //   // Mutations
+  //   const mutation = useMutation({
+  //     mutationFn: postTodo,
+  //     onSuccess: () => {
+  //       // Invalidate and refetch
+  //       queryClient.invalidateQueries({ queryKey: ["todos"] });
+  //     },
+  //   });
 
   return (
     <>
       <div>
         <h2>Ramdon Number</h2>
-        {loading ? <h2>Loading...</h2> : <h2>{data}</h2>}
-        {!loading && error && <h2>{error}</h2>}
+        {ramdomQuery.isFetching ? (
+          <h5>Loading...</h5>
+        ) : ramdomQuery.error ? (
+          <h6>{ramdomQuery.error.message}</h6>
+        ) : (
+          <h2>{ramdomQuery.data}</h2>
+        )}
+
+        <button
+          onClick={() => ramdomQuery.refetch()}
+          disabled={ramdomQuery.isFetching}
+        >
+          New Number
+        </button>
       </div>
     </>
   );
