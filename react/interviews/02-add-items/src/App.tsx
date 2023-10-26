@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState } from "react";
-import { Product, data } from "./data";
+import { Product } from "./data";
 
 export function getControl(control: any) {
   const isControl = control instanceof HTMLInputElement;
@@ -9,7 +9,7 @@ export function getControl(control: any) {
 }
 
 function App() {
-  const [items, setItems] = useState<Product[]>(data);
+  const [items, setItems] = useState<Product[]>([]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,6 +27,7 @@ function App() {
     };
 
     setItems((prevItems) => [...prevItems, newItemPayload]);
+    input.value = "";
   };
 
   const createHandleRemove = (itemId: string) => () => {
@@ -38,7 +39,7 @@ function App() {
       <aside>
         <h1>React tecnic interview</h1>
         <h2>Add and delete elements from a list</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} aria-label="Add elements to the list">
           <label>
             Element to introduce:
             <input
@@ -58,7 +59,7 @@ function App() {
           {items.map((item) => (
             <li key={item.id}>
               <button onClick={createHandleRemove(item.id)}>⛔</button>
-              {item.name} $/.{item.price}
+              {item.name}
             </li>
           ))}
         </ul>
