@@ -11,6 +11,8 @@ export const App = () => {
     queryFn: getRandomNumberFromAxios,
     retry: 1,
   });
+
+  
   console.log("🚀 ~ file: App.tsx:14 ~ App ~ ramdomQuery:", ramdomQuery);
   //   // Mutations
   //   const mutation = useMutation({
