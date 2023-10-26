@@ -30,8 +30,8 @@ describe("<App/>", () => {
 
     // User type in the input
     // User click the button
-    //const ramdomText = crypto.randomUUID();
-    await user.type(input, "test-1231231-12313");
+    const ramdomText = crypto.randomUUID();
+    await user.type(input, ramdomText);
     await user.click(button!);
 
     // User check the list
@@ -39,18 +39,20 @@ describe("<App/>", () => {
     expect(list).toBeDefined();
 
     // Check the list has one item
-    screen.debug();
     expect(list.childNodes.length).toBe(1);
 
     // Check the item has a remove button
-    const item = screen.getByText("test-1231231-12313");
+    const item = screen.getByText(ramdomText);
     const removeButton = item.querySelector("button");
     expect(removeButton).toBeDefined();
 
     // User click the remove button
     await user.click(removeButton!);
+    screen.debug();
 
     // Check the list is empty
-    expect(list.childNodes.length).toBe(0);
+    const emptyList = screen.getByText("Empty list");
+    expect(emptyList).toBeDefined();
+    //expect(list.childNodes.length).toBe(0);
   });
 });

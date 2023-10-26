@@ -1,6 +1,8 @@
 import "./App.css";
-import { useState } from "react";
-import { Product } from "./data";
+
+import { Item } from "./compoments/Item";
+import { useItems } from "./hooks/useItems";
+import { useSEO } from "./hooks/useSEO";
 
 export function getControl(control: any) {
   const isControl = control instanceof HTMLInputElement;
@@ -9,29 +11,28 @@ export function getControl(control: any) {
 }
 
 function App() {
-  const [items, setItems] = useState<Product[]>([]);
+  const { items, addItem, removeItem } = useItems();
+  useSEO({
+    title: ` ${
+      items.length > 0 ? +items.length + "🔔 " : ""
+    } React tecnic interview`,
+    description: "Add and delete elements from a list",
+  });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const { elements } = event.currentTarget;
 
     const input = getControl(elements.namedItem("item"));
     if (!input) return;
 
-    const newItemPayload: Product = {
-      id: crypto.randomUUID(),
-      name: input.value,
-      price: 44343,
-      timestamp: Date.now(),
-      description: `This is a ${input.value}`,
-    };
-
-    setItems((prevItems) => [...prevItems, newItemPayload]);
+    addItem(input.value);
     input.value = "";
   };
 
   const createHandleRemove = (itemId: string) => () => {
-    setItems((prev) => prev.filter((item) => item.id !== itemId));
+    removeItem(itemId);
   };
 
   return (
@@ -54,15 +55,22 @@ function App() {
         </form>
       </aside>
       <section>
-        <h3>List Elements: </h3>
-        <ul>
-          {items.map((item) => (
-            <li key={item.id}>
-              <button onClick={createHandleRemove(item.id)}>⛔</button>
-              {item.name}
-            </li>
-          ))}
-        </ul>
+        <h2>List Elements: </h2>
+        {items.length === 0 ? (
+          <p>
+            <strong>Empty list</strong>
+          </p>
+        ) : (
+          <ul>
+            {items.map((item) => (
+              <Item
+                handleRemove={createHandleRemove(item.id)}
+                {...item}
+                key={item.id}
+              />
+            ))}
+          </ul>
+        )}
       </section>
     </main>
   );

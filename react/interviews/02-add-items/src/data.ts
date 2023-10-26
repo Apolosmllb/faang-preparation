@@ -1,4 +1,4 @@
-export type Product = {
+export type Item = {
   id: `${string}-${string}-${string}-${string}-${string}`;
   name: string;
   price: number;
