@@ -3,12 +3,14 @@ export default function Layout(props: {
   aviones: React.ReactNode;
   carritos: React.ReactNode;
 }) {
+  const shoudlRender = true;
+
   return (
     <>
       <nav>SEXO</nav>
       {props.children}
       {props.aviones}
-      {props.carritos}
+      {shoudlRender && props.carritos}
     </>
   );
 }
