@@ -27,7 +27,7 @@ export default function Movies() {
   };
 
   return (
-    <div>
+    <div className="border-2 border-red-800">
       <h1>Bobbies</h1>
       <ul>
         {movies.map((movie) => (
