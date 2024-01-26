@@ -1,0 +1,12 @@
+.page {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+main {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
