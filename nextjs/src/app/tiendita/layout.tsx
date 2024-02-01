@@ -7,7 +7,7 @@ export default function Layout(props: {
 
   return (
     <>
-      <nav>SEXO</nav>
+     
       {props.children}
       {props.aviones}
       {shoudlRender && props.carritos}
